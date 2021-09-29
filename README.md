@@ -4,6 +4,7 @@ I am a fullstack software engineer from bangladesh
 - 🌱 Learning multiple analytics and visualisation patterns in order to extract maximum insights from the raw data
 <br>
 ## Connect with me
+<br>
 from google.colab import drive
 drive.mount('/content/drive')
 root_path = 'gdrive/My Drive/Colab Notebooks'
@@ -36,10 +37,12 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+<br>
 df_botnet = pd.read_excel('/content/drive/MyDrive/Colab Notebooks/new.xlsx')
 df_botnet
 df_botnet.isna().sum
 df_new = df_botnet[['MI_dir_L5_mean','MI_dir_L3_mean','MI_dir_L1_mean','MI_dir_L0.1_mean','MI_dir_L0.01_mean','H_L5_mean','H_L3_mean','H_L1_mean','H_L0.1_mean','H_L0.01_mean','HH_L5_mean','HH_L3_mean','HH_L1_mean','HH_L0.1_mean','HH_L0.01_mean','HH_jit_L5_mean','HH_jit_L3_mean','HH_jit_L1_mean','HH_jit_L0.1_mean','HH_jit_L0.01_mean','HpHp_L5_mean','HpHp_L3_mean','HpHp_L1_mean','HpHp_L0.1_mean','HpHp_L0.01_mean','Attack','Botnet','MI_dir_L5_variance','MI_dir_L3_variance','MI_dir_L1_variance','MI_dir_L0.1_variance','MI_dir_L0.01_variance','H_L5_variance','H_L3_variance','H_L1_variance','H_L0.1_variance','H_L0.01_variance','HH_jit_L0.01_variance','HpHp_L0.1_covariance','HpHp_L1_covariance','HpHp_L3_covariance','HpHp_L5_covariance','HpHp_L0.01_covariance', 'MI_dir_L5_weight', 'MI_dir_L3_weight', 'MI_dir_L1_weight', 'MI_dir_L0.1_weight','MI_dir_L0.01_weight', 'H_L5_weight', 'H_L3_weight', 'H_L1_weight', 'H_L0.1_weight', 'H_L0.01_weight', 'HH_L5_weight', 'HH_L3_weight','HH_L0.01_weight','HH_jit_L5_weight', 'HH_jit_L3_weight','HH_jit_L1_weight', 'HH_jit_L0.1_weight', 'HH_jit_L0.01_weight', 'HpHp_L5_weight', 'HpHp_L3_weight', 'HpHp_L1_weight', 'HpHp_L0.01_weight','HpHp_L0.1_weight','HH_L5_pcc','HH_L5_std','HH_L5_radius','HH_L5_pcc','HH_L3_std','HpHp_L5_std','HpHp_L0.01_pcc','HpHp_L0.01_radius']]
+<br>
 df_new['s_mac_ip_mean'] = df_new[['MI_dir_L5_mean', 'MI_dir_L3_mean','MI_dir_L1_mean', 'MI_dir_L0.1_mean','MI_dir_L0.01_mean']].mean(axis=1)
 df_new['s_mac_ip_weight'] = df_new[['MI_dir_L5_weight', 'MI_dir_L3_weight','MI_dir_L1_weight', 'MI_dir_L0.1_weight','MI_dir_L0.01_weight']].mean(axis=1)
 df_new['s_ip_mean'] = df_new[['H_L5_mean', 'H_L3_mean','H_L1_mean', 'H_L0.1_mean','H_L0.01_mean']].mean(axis=1)
@@ -56,6 +59,7 @@ df_new['channel_jitter_var'] = df_new[['HH_jit_L0.01_variance']].mean(axis=1)
 df_new['socket_covar'] = df_new[['HpHp_L5_covariance', 'HpHp_L3_covariance','HpHp_L1_covariance', 'HpHp_L0.1_covariance','HpHp_L0.01_covariance']].mean(axis=1)
 df_b_traffic = df_new[['s_mac_ip_weight','s_ip_weight','channel_weight','channel_jitter_weight','socket_weight','s_mac_ip_mean','s_ip_mean','channel_mean','channel_jitter_mean','socket_mean','s_mac_ip_var','s_ip_var','channel_jitter_var','socket_covar','HH_L5_pcc','HH_L5_std','HH_L5_radius','HH_L5_pcc','HH_L3_std','HpHp_L5_std','HpHp_L0.01_pcc','HpHp_L0.01_radius','Botnet']]
 df_b_traffic
+<br>
 print("Mean value:",df_new['s_mac_ip_mean'].mean()) 
 print("Median value:",df_new['s_mac_ip_mean'].median()) 
 print("Mode:",df_new['s_mac_ip_mean'].mode()) 
@@ -78,10 +82,12 @@ print("Mean value:",df_new['socket_mean'].mean())
 print("Median value:",df_new['socket_mean'].median()) 
 print("Mode:",df_new['socket_mean'].mode()) 
 print("Mode:",df_new['Botnet'].mode()) 
+<br>
 plt.subplots(figsize=(20,10))
 sns.heatmap(df_b_traffic.corr(), annot=True, cmap="Reds")
 df_attack = df_b_traffic.drop(['s_mac_ip_var','s_ip_var','s_ip_mean', 'socket_mean', 's_ip_weight', 'channel_jitter_weight', 'channel_mean','HH_L5_pcc','HH_L5_std','HH_L5_radius','HH_L5_pcc','HH_L3_std','HpHp_L5_std','HpHp_L0.01_pcc','HpHp_L0.01_radius'],axis=1)
 df_attack
+<br>
 plt.subplots(figsize=(20,10))
 sns.heatmap(df_attack.corr(), annot=True, cmap="Reds")
 plt.subplots(figsize=(20,10))
@@ -93,11 +99,11 @@ sns.scatterplot(data = df_new, x="s_mac_ip_weight", y="channel_weight", hue = 'B
 mymap = {'benign': 0, 'Bashlite': 1, 'Mirai': 2}
 df_ab = df_attack.applymap(lambda s: mymap.get(s) if s in mymap else s)
 df_ab
+<br>
 g = sns.countplot(df_ab['Botnet'])
 g.set_xticklabels(['Bashlite','Mirai','Benign'])
 plt.show()
 class_count_0, class_count_1, class_count_2 = df_ab['Botnet'].value_counts()
-
 class_0 = df_ab[df_ab['Botnet'] == 0]
 class_1 = df_ab[df_ab['Botnet'] == 1]
 class_2 = df_ab[df_ab['Botnet'] == 2]
@@ -105,7 +111,7 @@ print('class 0:', class_0.shape)
 print('class 1:', class_1.shape)
 print('class 2:', class_2.shape)
 shuffled_df = df_ab.sample(frac=1,random_state=4)
-
+<br>
 bashlite_df = shuffled_df.loc[shuffled_df['Botnet'] == 0]
 
 mirai_df = shuffled_df.loc[shuffled_df['Botnet'] == 1].sample(n=39100,random_state=42)
@@ -116,6 +122,7 @@ plt.figure(figsize=(8, 8))
 sns.countplot('Botnet', data=df_ab)
 plt.title('Balanced Classes')
 plt.show()
+<br>
 from sklearn.model_selection import train_test_split
 from sklearn import linear_model
 X_train, X_test, y_train, y_test = train_test_split(
@@ -135,7 +142,7 @@ bbc = BalancedBaggingClassifier(base_estimator=DecisionTreeClassifier(),
 
 y_train = df_ab['Botnet']
 X_train = df_ab.drop(['Botnet'], axis=1, inplace=False)
-
+<br>
 #Train the classifier.
 bbc.fit(X_train, y_train)
 preds = bbc.predict(X_test)
@@ -304,3 +311,5 @@ for pipe in pipe_list:
 print(df_read)
 print(" ")
 print(df_read_as)
+<br>
+<br>
